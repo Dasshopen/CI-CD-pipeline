@@ -20,9 +20,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-        with:
-          python-version: ${{ matrix.python-version }}   
-
       - name: Run Trivy vulnerability scanner in filesystem mode
         uses: aquasecurity/trivy-action@b3dafe507ffa004210975439a1e6156b8ebb3f50
         with:
@@ -42,6 +39,12 @@ jobs:
           format: "sarif"
           output: "trivy-results.sarif"
           severity: "CRITICAL,HIGH,MEDIUM"
+
+      - name: Upload Trivy scan results to GitHub Security tab
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: "trivy-results.sarif"
+
 
       - name: Upload Trivy scan results to GitHub Security tab
         uses: github/codeql-action/upload-sarif@v3
