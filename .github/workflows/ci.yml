@@ -11,11 +11,15 @@ permissions:
   security-events: write
 
 jobs:
-  trivy-scan:
+  test_python:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [3.8, 3.9, 3.10]
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}   
 
       - name: Run Trivy vulnerability scanner in filesystem mode
         uses: aquasecurity/trivy-action@b3dafe507ffa004210975439a1e6156b8ebb3f50
