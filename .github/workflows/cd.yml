@@ -16,6 +16,6 @@ jobs:
       - name: Build Docker image (local)
         uses: docker/build-push-action@v6
         with:
-          context: ./.github/workflows
+          context: .
           load: true
           tags: myapp:${{ github.sha }}
